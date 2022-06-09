@@ -1,0 +1,63 @@
+body {
+  background-image: url("./img/background.png");
+  background-size: cover;
+  background-repeat: no-repeat, repeat;
+  background-color: #CFC322;
+}
+
+.gameBtn {
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 4rem;
+  height: 4rem;
+  background-color: #EED9B2;
+  border: 5px solid;
+  border-radius: 20px;
+  padding: 15px;
+  font-size: 3.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+
+.gameBtn:hover {
+  transform: scale(1.1);
+}
+
+.timer {
+  margin: 20px auto;
+  display: block;
+  width: 12rem;
+  padding: 10px;
+  border: 5px solid;
+  border-radius: 20px;
+  background-color: white;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.counter {
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 5rem;
+  height: 5rem;
+  padding: 10px;
+  border: 5px solid black;
+  border-radius: 50%;
+  background-color: #E0977F;
+  font-size: 4rem;
+  text-align: center;
+  color: white;
+}
+
+.item {
+  margin: auto;
+  width: 100x;
+  display: flex;
+  padding: 300px;
+  cursor: pointer;
+}

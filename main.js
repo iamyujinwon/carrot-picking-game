@@ -1,27 +1,33 @@
 const item = document.querySelector('.item');
 const counter = document.querySelector('.counter');
 const gameBtn = document.querySelector('.gameBtn');
+const timer = document.querySelector('.timer');
+const modal = document.querySelector('.modal');
+const replayBtn = document.querySelector('.replayBtn');
 let isStart = false;
  
-// const myinterval = setInterval(setTimer, 1000);
+let myinterval;
 let timeCounter = 10;
-
 
 gameBtn.addEventListener('click', () => {
   isStart = !isStart;
-  console.log(isStart);
-
-  // const myinterval = setInterval(setTimer, 1000);
 
   if(isStart) {
     gameBtn.innerHTML = `<i class="fa-solid fa-stop"></i>`;
-    clearInterval(myinterval);
+    timer.innerHTML = `0:${timeCounter}`;
+    myinterval = setInterval(setTimer, 1000);
   } else {
-    gameBtn.innerHTML = `<i class="fa-solid fa-play"></i>`;
+    gameBtn.style.visibility = 'hidden';
+    modal.style.display = 'inline';
+    clearInterval(myinterval);
   }
-
-  // setTimer();
 })
+
+replayBtn.addEventListener('click', () => {
+  location.reload();
+})
+
+
 
 item.addEventListener('click', () => {
   setCounter();
@@ -36,21 +42,9 @@ function setCounter() {
 }
 
 function setTimer() {
-  // let timeCounter = 10;
-  const timer = document.querySelector('.timer');
-
-  // timer.innerText = `0:${timeCounter}`;
-
-  // let interval = setInterval(function () {
-  //   timeCounter--;
-  //   if (timeCounter < 0 || isStart === false) {
-  //     clearInterval(interval);
-  //     return;
-  //   }
-  //   timer.innerText = `0:${timeCounter}`;
-  // }, 1000);
-
-
-  timer.innerHTML = `0:${timeCounter--}`;
-  console.log("hello");
+  if (timeCounter >= 0) {
+    timer.innerHTML = `0:${--timeCounter}`;
+  } else {
+    return;
+  }
 }

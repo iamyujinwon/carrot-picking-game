@@ -61,3 +61,45 @@ body {
   padding: 300px;
   cursor: pointer;
 }
+
+.modal {
+  display: none;
+  position: absolute; 
+  top: 60%;
+  left: 0; 
+  right: 0; 
+  margin: auto;
+  width: 600px;
+  border-radius: 30px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+.replayBtn {
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 4rem;
+  height: 4rem;
+  background-color: #EED9B2;
+  color: black;
+  border: 5px solid;
+  border-radius: 20px;
+  padding: 15px;
+  font-size: 3.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+
+.replayBtn:hover {
+  transform: scale(1.1);
+}
+
+.modalMsg {
+  margin: 20px auto;
+  display: block;
+  text-align: center;
+  font-size: 70px;
+}

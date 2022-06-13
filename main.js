@@ -14,11 +14,17 @@ const popUp = document.querySelector('.pop-up');
 const popUpMsg = document.querySelector('.pop-up__message');
 const popUpRefresh = document.querySelector('.pop-up__refresh');
 
+const carrotSound = new Audio('./sound/carrot_pull.mp3');
+const bugSound = new Audio('./sound/bug_pull.mp3');
+const bgSound = new Audio('./sound/bg.mp3');
+const alertSound = new Audio('./sound/alert.wav');
+const gameWinSound = new Audio('./sound/game_win.mp3');
+
 let started = false;
 let score = 0;
 let timer = undefined;
 
-field.addEventListener('click', onFieldClick)
+field.addEventListener('click', onFieldClick);
 
 gameBtn.addEventListener('click', () => {
   if (started) {
@@ -31,7 +37,6 @@ gameBtn.addEventListener('click', () => {
 popUpRefresh.addEventListener('click', () => {
   startGame();
   hidePopUp();
-  reset();
 })
 
 function startGame() {
@@ -40,6 +45,7 @@ function startGame() {
   showStopBtn();
   showTimerAndScore();
   startGameTimer();
+  playSound(bgSound);
 }
 
 function stopGame() {
@@ -47,17 +53,17 @@ function stopGame() {
   stopGameTimer();
   hideGameButton();
   showPopupWithText('REPLAY?');
-}
-
-function reset() {
-  gameBtn.style.visibility = 'visible';
-  score = 0;
+  playSound(alertSound);
+  stopSound(bgSound); 
 }
 
 function finishGame(win) {
+  win ? playSound(gameWinSound) : playSound(bugSound);
   started = false;
   hideGameButton();
   showPopupWithText(win? 'YOU WON!' : 'YOU LOST');
+  stopGameTimer();
+  stopSound(bgSound);
 }
 
 function showStopBtn() {
@@ -108,7 +114,9 @@ function hidePopUp() {
 }
 
 function initGame() {
+  score = 0;
   field.innerHTML = '';
+  gameBtn.style.visibility = 'visible';
   gameScore.innerText = CARROT_COUNT;
   addItem('carrot', CARROT_COUNT, 'img/carrot.png');
   addItem('bug', BUG_COUNT, 'img/bug.png');
@@ -123,15 +131,24 @@ function onFieldClick(event) {
     target.remove();
     score++;
     updateScoreBoard();
+    playSound(carrotSound);
 
     if (score === CARROT_COUNT) {
-      stopGameTimer();
       finishGame(true);
     }
   } else if (target.matches('.bug')) {
-    stopGameTimer();
+    playSound(bugSound);
     finishGame(false);
   }
+}
+
+function playSound(sound) {
+  sound.currentTime = 0;
+  sound.play();
+}
+
+function stopSound(sound) {
+  sound.pause();
 }
 
 function updateScoreBoard() {

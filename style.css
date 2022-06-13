@@ -53,17 +53,25 @@ body {
   text-align: center;
   color: white;
 }
+.picking-section {
+  display: flex;
+  margin: auto;
+  width: 100%;
+}
 
 .item {
   position: absolute;
   top: 0;
   bottom: 0;
   margin: auto;
-  width: 100x;
+  width: 100px;
   display: flex;
-  padding: 300px;
   cursor: pointer;
-  z-index: 5;
+  transition: all .2s ease-in-out;
+}
+
+.item:hover {
+  transform: scale(1.1);
 }
 
 .bug {
@@ -71,10 +79,15 @@ body {
   top: 0;
   bottom: 0;
   margin: auto;
-  width: 100x;
+  width: 100px;
   display: flex;
-  padding: 300px;
   cursor: pointer;
+  transition: all .2s ease-in-out;
+  z-index: 5;
+}
+
+.bug:hover {
+  transform: scale(1.1);
 }
 
 .modal {

@@ -79,12 +79,12 @@ function startGameTimer() {
   let remainingTimeSec = GAME_DURATION_SEC;
   updateTimerText(remainingTimeSec);
   timer = setInterval(() => {
-    if (remainingTimeSec <= 0) {
+    updateTimerText(--remainingTimeSec);
+    if (remainingTimeSec === 0) {
       clearInterval(timer);
       finishGame(CARROT_COUNT === score);
       return;
     }
-    updateTimerText(--remainingTimeSec);
   }, 1000);
 }
 
@@ -149,6 +149,8 @@ function addItem(className, count, imgPath) {
     item.setAttribute('class', className);
     item.setAttribute('src', imgPath);
     item.style.position = 'absolute';
+    item.style.cursor = 'pointer';
+
     const x = randomNumber(startX, endX);
     const y = randomNumber(startY, endY);
     item.style.left = `${x}px`;

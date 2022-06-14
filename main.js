@@ -4,6 +4,7 @@ const CARROT_SIZE = 80;
 const CARROT_COUNT = 10;
 const BUG_COUNT = 10;
 const GAME_DURATION_SEC = 10;
+const GAME_DURATION_TIME= 1000;
 
 const field = document.querySelector('.game__field');
 const fieldRect = field.getBoundingClientRect();
@@ -82,26 +83,36 @@ function showTimerAndScore() {
 }
 
 function startGameTimer() {
+  let remainingTime = GAME_DURATION_TIME;
   let remainingTimeSec = GAME_DURATION_SEC;
-  updateTimerText(remainingTimeSec);
+
+  let second = remainingTime / 100;
+  let milliSec = remainingTime / remainingTimeSec;
+
+  updateTimerText(--second, --milliSec);
+
   timer = setInterval(() => {
-    updateTimerText(--remainingTimeSec);
-    if (remainingTimeSec === 0) {
+    if (second === 0 && milliSec === 0) {
       clearInterval(timer);
       finishGame(CARROT_COUNT === score);
       return;
+    } else if (milliSec === 0) {
+      second--;
+      milliSec = 99;
     }
-  }, 1000);
+    updateTimerText(second, --milliSec); 
+  }, 10);
 }
 
 function stopGameTimer() {
   clearInterval(timer);
 }
 
-function updateTimerText(time) {
-  const minutes = Math.floor(time / 60);
-  const seconds = time % 60;
-  gameTimer.innerText = `${minutes}:${seconds}`;
+function updateTimerText(second, milliSec) {
+  const sec = String(second).padStart(2, '0');
+  const milli = String(milliSec).padStart(2, '0');
+
+  gameTimer.innerText = `${sec}:${milli}`;
 }
 
 function showPopupWithText(text) {
@@ -179,75 +190,3 @@ function addItem(className, count, imgPath) {
 function randomNumber(min, max) {
   return Math.random() * (max - min) + min;
 }
-
-
-
-
-
-// const items = document.querySelectorAll('.item');
-// const bugs = document.querySelectorAll('.bug');
-// const counter = document.querySelector('.counter');
-// const gameBtn = document.querySelector('.gameBtn');
-// const timer = document.querySelector('.timer');
-// const modal = document.querySelector('.modal');
-// const replayBtn = document.querySelector('.replayBtn');
-// let isStart = false;
- 
-// let myinterval;
-// let timeCounter = 10;
-
-// const getRandom = (min, max) => Math.floor(Math.random()*(max-min+1)+min);
-
-// gameBtn.addEventListener('click', () => {
-//   isStart = !isStart;
-
-//   if(isStart) {
-//     gameBtn.innerHTML = `<i class="fa-solid fa-stop"></i>`;
-//     timer.innerHTML = `0:${timeCounter}`;
-//     myinterval = setInterval(setTimer, 1000);
-
-
-//     for (i = 0; i < items.length; i++) {
-//       items[i].style.left= getRandom(0, 1000)+'px'; 
-//       items[i].style.top = getRandom(0, 800)+'px'; 
-//     }
-
-//     for (i = 0; i < bugs.length; i++) {
-//       bugs[i].style.left= getRandom(0, 1000)+'px'; 
-//       bugs[i].style.top = getRandom(0, 800)+'px'; 
-//     }
-
-//   } else {
-//     gameBtn.style.visibility = 'hidden';
-//     modal.style.display = 'inline';
-//     clearInterval(myinterval);
-//   }
-// })
-
-// replayBtn.addEventListener('click', () => {
-//   location.reload();
-// })
-
-
-
-// for (i = 0; i < items.length; i++) {
-//   items[i].addEventListener('click', () => {
-//     setCounter();
-//   })
-// }
-
-// function setCounter() {
-//   let carrotCounter = +counter.textContent;
-
-//   if (carrotCounter > 0) {
-//     counter.innerText = `${carrotCounter - 1}`
-//   }
-// }
-
-// function setTimer() {
-//   if (timeCounter >= 0) {
-//     timer.innerHTML = `0:${--timeCounter}`;
-//   } else {
-//     return;
-//   }
-// }

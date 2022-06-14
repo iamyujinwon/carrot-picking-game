@@ -1,6 +1,7 @@
 'use strict';
 import PopUp from './popup.js';
 import Field from './field.js';
+import * as sound from './sound.js';
 
 const CARROT_COUNT = 10;
 const BUG_COUNT = 10;
@@ -10,11 +11,6 @@ const GAME_DURATION_TIME= 1000;
 const gameBtn = document.querySelector('.game__button');
 const gameTimer = document.querySelector('.game__timer');
 const gameScore = document.querySelector('.game__score');
-
-const bugSound = new Audio('./sound/bug_pull.mp3');
-const bgSound = new Audio('./sound/bg.mp3');
-const alertSound = new Audio('./sound/alert.wav');
-const gameWinSound = new Audio('./sound/game_win.mp3');
 
 let started = false;
 let score = 0;
@@ -61,7 +57,7 @@ function startGame() {
   showStopBtn();
   showTimerAndScore();
   startGameTimer();
-  playSound(bgSound);
+  sound.playBackground();
 }
 
 function stopGame() {
@@ -69,8 +65,8 @@ function stopGame() {
   stopGameTimer();
   hideGameButton();
   gameFinishBanner.showWithText('REPLAY?');
-  playSound(alertSound);
-  stopSound(bgSound); 
+  sound.playAlert();
+  sound.stopBackground(); 
 }
 
 function initGame() {
@@ -81,12 +77,12 @@ function initGame() {
 }
 
 function finishGame(win) {
-  win ? playSound(gameWinSound) : playSound(bugSound);
+  win ? sound.playWin() : sound.playBug();
   started = false;
   hideGameButton();
   gameFinishBanner.showWithText(win? 'YOU WON!' : 'YOU LOST');
   stopGameTimer();
-  stopSound(bgSound);
+  sound.stopBackground();
 }
 
 function showStopBtn() {
@@ -135,13 +131,4 @@ function updateTimerText(second, milliSec) {
   const milli = String(milliSec).padStart(2, '0');
 
   gameTimer.innerText = `${sec}:${milli}`;
-}
-
-function playSound(sound) {
-  sound.currentTime = 0;
-  sound.play();
-}
-
-function stopSound(sound) {
-  sound.pause();
 }
